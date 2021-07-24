@@ -58,8 +58,7 @@ def playerFromReddit(query):
   def toCsvFile():
       count = 0
       location = "C:\\Users\\Pranav\\nba 2021 viz\\playerRedditData\\"
-      print("input filename of submission file, please add .csv")
-      filename = input()
+      filename = query + ".csv"
       file = location + filename
       with open(file, 'w', newline='', encoding='utf-8') as file: 
           a = csv.writer(file, delimiter=',')
