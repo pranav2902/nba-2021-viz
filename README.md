@@ -8,3 +8,8 @@ Instructions
 3. The CSV file with post information is obtained in playerRedditData folder.
 
 
+Basic Team Visualizations added:
+1. Dunks and Layups vs 3pts Made
+2. % of FG taken with distance
+3. Assist to Turnover plot
+4. Rebound split
