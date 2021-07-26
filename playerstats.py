@@ -61,20 +61,22 @@ def commonViz(pl,pos,position,ct):
         sns.set_style("darkgrid")
         for i in range(ct):
             posn = playerpergame["Pos"][pos+i]
-            sns.scatterplot(data = playerpergame, x = playerpergame[playerpergame["Pos"] == posn]["PTS"],y = playerpergame[playerpergame["Pos"] == posn]["FG%"]*100,ax = ax[i],color = "g")
-            ax[i].set_title("PPG vs FG Percent for {} in {}".format(playerpergame["Player"][pos+i],playerpergame["Tm"][pos+i]))
-            ax[i].scatter(x = playerpergame["PTS"][pos+i],y = playerpergame["FG%"][pos+i]*100, color = "red")
+            sns.scatterplot(data = playerpergame, x = playerpergame[playerpergame["Pos"] == posn]["PTS"],y = playerpergame[playerpergame["Pos"] == posn]["eFG%"]*100,ax = ax[i],color = "g")
+            ax[i].set_title("PPG vs eFG Percent for {} in {}".format(playerpergame["Player"][pos+i],playerpergame["Tm"][pos+i]))
+            ax[i].scatter(x = playerpergame["PTS"][pos+i],y = playerpergame["eFG%"][pos+i]*100, color = "red")
         plt.show()
         plt.close()
     else:
         fig,ax = plt.subplots(ct,1,figsize = (20,20),tight_layout = True)
         sns.set_style("darkgrid")
         posn = playerpergame["Pos"][pos]
-        sns.scatterplot(data = playerpergame, x = playerpergame[playerpergame["Pos"] == posn]["PTS"],y = playerpergame[playerpergame["Pos"] == posn]["FG%"]*100,ax = ax,color = "g")
-        ax.set_title("PPG vs FG Percent for {} in {}".format(playerpergame["Player"][pos],playerpergame["Tm"][pos]))
-        ax.scatter(x = playerpergame["PTS"][pos],y = playerpergame["FG%"][pos]*100, color = "red")
+        sns.scatterplot(data = playerpergame, x = playerpergame[playerpergame["Pos"] == posn]["PTS"],y = playerpergame[playerpergame["Pos"] == posn]["eFG%"]*100,ax = ax,color = "g")
+        ax.set_title("PPG vs eFG Percent for {} in {}".format(playerpergame["Player"][pos],playerpergame["Tm"][pos]))
+        ax.scatter(x = playerpergame["PTS"][pos],y = playerpergame["eFG%"][pos]*100, color = "red")
         plt.show()
         plt.close()
+
+    
   
 
 
