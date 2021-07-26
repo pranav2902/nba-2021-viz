@@ -22,7 +22,7 @@ from pandas import ExcelWriter
 
 
 ## Below function to preprocess Player names - Preprocessing done
-
+'''
 def newPlayerStats():
     #print(playertotals.head())
     for i in range(len(playertotals)):
@@ -36,7 +36,7 @@ def newPlayerStats():
     playeradvanced.to_excel(writer, "Player Advanced",index=False)
     playershooting.to_excel(writer, "Player Shooting",index=False)
     writer.save()
-
+'''
 ## Matching Function if input is not the full name
 def matchPlayerName(pl):
     f = 0
@@ -56,13 +56,23 @@ def matchPlayerName(pl):
 def findPosition(pos):
     return playertotals.Pos[pos]  
 
-def betterFiles():
+
+## Remove TOT files
+def betterFiles(playertotals,playerpergame,playeradvanced,playershooting):
+    indices = []
     for i in range(len(playertotals)):
         if(playertotals["Tm"][i] == "TOT"):
-            playertotals = playertotals.drop(playertotals.index(i))
-            playerpergame = playerpergame.drop(playerpergame.index(i))
-            playeradvanced = playeradvanced.drop(playeradvanced.index(i))
-            playershooting = playershooting.drop(playershooting.index(i))
+            indices.append(i)    
+    playertotals = playertotals.drop(indices)
+    playerpergame = playerpergame.drop(indices)
+    playeradvanced = playeradvanced.drop(indices)
+    playershooting = playershooting.drop(indices)
+    writer = ExcelWriter("newplayerstats.xlsx")
+    playertotals.to_excel(writer,"Player Totals",index=False)
+    playerpergame.to_excel(writer,"Player per game",index=False)
+    playeradvanced.to_excel(writer, "Player Advanced",index=False)
+    playershooting.to_excel(writer, "Player Shooting",index=False)
+    writer.save()
     
 
 
@@ -120,12 +130,12 @@ def commonViz(pl,pos,position,ct):
     
 
 if __name__ == "__main__":
-    playertotals = pd.read_excel("playerstats.xlsx",sheet_name="Player totals")
-    playerpergame = pd.read_excel("playerstats.xlsx",sheet_name="Player per game")
-    playeradvanced = pd.read_excel("playerstats.xlsx",sheet_name="Player Advanced")
-    playershooting = pd.read_excel("playerstats.xlsx",sheet_name="Player Shooting")
-    #betterFiles()
-    newPlayerStats()
+    playertotals = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Totals")
+    playerpergame = pd.read_excel("newplayerstats.xlsx",sheet_name="Player per game")
+    playeradvanced = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Advanced")
+    playershooting = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Shooting")
+    betterFiles(playertotals,playerpergame,playeradvanced,playershooting)
+    #newPlayerStats()
     print("Enter Player name with first letter capitalized")
     pl = input()
     pos,pl,ct = matchPlayerName(pl)
