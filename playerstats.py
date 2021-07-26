@@ -16,7 +16,7 @@ from pandas import ExcelWriter
 
 ## Current Issues
 ## Special characters in names, not detected. Workaround : Type rest of name or part of the name without the accented letter or copy from online.
-## Remove TOT rows from all sheets. Then Save all the vizs under player folder.
+## Remove TOT rows from all sheets - Done. Then Save all the vizs under player folder. -
 ## Check if player folder exists before doing viz.
 
 
@@ -57,7 +57,8 @@ def findPosition(pos):
     return playertotals.Pos[pos]  
 
 
-## Remove TOT files
+## Remove TOT files - Done
+'''
 def betterFiles(playertotals,playerpergame,playeradvanced,playershooting):
     indices = []
     for i in range(len(playertotals)):
@@ -73,7 +74,7 @@ def betterFiles(playertotals,playerpergame,playeradvanced,playershooting):
     playeradvanced.to_excel(writer, "Player Advanced",index=False)
     playershooting.to_excel(writer, "Player Shooting",index=False)
     writer.save()
-    
+'''
 
 
 
@@ -134,7 +135,7 @@ if __name__ == "__main__":
     playerpergame = pd.read_excel("newplayerstats.xlsx",sheet_name="Player per game")
     playeradvanced = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Advanced")
     playershooting = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Shooting")
-    betterFiles(playertotals,playerpergame,playeradvanced,playershooting)
+    #betterFiles(playertotals,playerpergame,playeradvanced,playershooting)
     #newPlayerStats()
     print("Enter Player name with first letter capitalized")
     pl = input()
