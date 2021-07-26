@@ -1,8 +1,10 @@
+from numpy.core.numeric import False_
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
 import seaborn as sns
+from pandas import ExcelWriter
 
 ## Common Vizs - PPG vs eFG%,  Make most of the stats here. Only specialized position vizs to be kept in different module
 ## PG Vizs - PPG,APG Graph. Shooting Graph. Steals Graph.   
@@ -14,10 +16,12 @@ import seaborn as sns
 
 ## Current Issues
 ## Special characters in names, not detected. Workaround : Type rest of name or part of the name without the accented letter or copy from online.
+## Remove TOT rows from all sheets. Then Save all the vizs under player folder.
+## Check if player folder exists before doing viz.
 
 
 
-## Below function to preprocess Player names
+## Below function to preprocess Player names - Preprocessing done
 
 def newPlayerStats():
     #print(playertotals.head())
@@ -26,8 +30,12 @@ def newPlayerStats():
         playerpergame["Player"][i] = playerpergame["Player"][i].split("\\")[0]
         playeradvanced["Player"][i] = playeradvanced["Player"][i].split("\\")[0]
         playershooting["Player"][i] = playershooting["Player"][i].split("\\")[0]
-    return
-
+    writer = ExcelWriter("newplayerstats.xlsx")
+    playertotals.to_excel(writer,"Player Totals",index=False)
+    playerpergame.to_excel(writer,"Player per game",index=False)
+    playeradvanced.to_excel(writer, "Player Advanced",index=False)
+    playershooting.to_excel(writer, "Player Shooting",index=False)
+    writer.save()
 
 ## Matching Function if input is not the full name
 def matchPlayerName(pl):
@@ -47,7 +55,16 @@ def matchPlayerName(pl):
 ## Returns the playing position of the player
 def findPosition(pos):
     return playertotals.Pos[pos]  
+
+def betterFiles():
+    for i in range(len(playertotals)):
+        if(playertotals["Tm"][i] == "TOT"):
+            playertotals = playertotals.drop(playertotals.index(i))
+            playerpergame = playerpergame.drop(playerpergame.index(i))
+            playeradvanced = playeradvanced.drop(playeradvanced.index(i))
+            playershooting = playershooting.drop(playershooting.index(i))
     
+
 
 
 ## Common Visualizations
@@ -107,8 +124,9 @@ if __name__ == "__main__":
     playerpergame = pd.read_excel("playerstats.xlsx",sheet_name="Player per game")
     playeradvanced = pd.read_excel("playerstats.xlsx",sheet_name="Player Advanced")
     playershooting = pd.read_excel("playerstats.xlsx",sheet_name="Player Shooting")
+    #betterFiles()
     newPlayerStats()
-    print("Enter Player name with first letter in Caps")
+    print("Enter Player name with first letter capitalized")
     pl = input()
     pos,pl,ct = matchPlayerName(pl)
     position = findPosition(pos)
