@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib import style
 import seaborn as sns
 from pandas import ExcelWriter
+import os
 
 ## Common Vizs - PPG vs eFG%,  Make most of the stats here. Only specialized position vizs to be kept in different module
 ## PG Vizs - PPG,APG Graph. Shooting Graph. Steals Graph.   
@@ -16,9 +17,16 @@ from pandas import ExcelWriter
 
 ## Current Issues
 ## Special characters in names, not detected. Workaround : Type rest of name or part of the name without the accented letter or copy from online.
-## Remove TOT rows from all sheets - Done. Then Save all the vizs under player folder. -
-## Check if player folder exists before doing viz.
+## Remove TOT rows from all sheets - Done. Then Save all the vizs under player folder. - Done.
+## Check if player folder exists before doing viz. - Done.
+## Modularize plots
 
+## Create Player folder
+def createFolder(pl):
+    if(pl in os.listdir("player stats")):
+        print("Player stats are present in ./{}/{}".format("player stats",pl))
+    else:
+        os.mkdir("./player stats/{}".format(pl))
 
 
 ## Below function to preprocess Player names - Preprocessing done
@@ -93,6 +101,7 @@ def commonViz(pl,pos,position,ct):
             ax[i].set_title("PPG vs eFG Percent for {} in {}".format(playerpergame["Player"][pos+i],playerpergame["Tm"][pos+i]))
             ax[i].scatter(x = playerpergame["PTS"][pos+i],y = playerpergame["eFG%"][pos+i]*100, color = "red")
             ax[i].text(x = playerpergame["PTS"][pos+i]+0.3,y = playerpergame["eFG%"][pos+i]*100+0.3,s=playerpergame.Player[pos+i])
+        plt.savefig("player stats/{}/Points vs Efficiency.png".format(pl))
         plt.show()
         plt.close()
     else:
@@ -103,6 +112,7 @@ def commonViz(pl,pos,position,ct):
         ax.set_title("PPG vs eFG Percent for {} in {}".format(playerpergame["Player"][pos],playerpergame["Tm"][pos]))
         ax.scatter(x = playerpergame["PTS"][pos],y = playerpergame["eFG%"][pos]*100, color = "red")
         ax.text(x = playerpergame["PTS"][pos]+0.3,y = playerpergame["eFG%"][pos]*100+0.3,s=playerpergame.Player[pos])
+        plt.savefig("player stats/{}/Points vs Efficiency.png".format(pl))
         plt.show()
         plt.close()
     ## Advanced stat Vizs
@@ -115,7 +125,7 @@ def commonViz(pl,pos,position,ct):
             ax[i].set_title("USG vs TOV Percent for {} in {}".format(playeradvanced["Player"][pos+i],playeradvanced["Tm"][pos+i]))
             ax[i].scatter(x = playeradvanced["USG%"][pos+i],y = playeradvanced["TOV%"][pos+i], color = "red")
             ax[i].text(x = playeradvanced["USG%"][pos+i]+0.3,y = playeradvanced["TOV%"][pos+i]+0.3, s=playeradvanced.Player[pos+i])
-
+        plt.savefig("player stats/{}/Usage vs Turnover %.png".format(pl))
         plt.show()
         plt.close()
     else:
@@ -126,6 +136,7 @@ def commonViz(pl,pos,position,ct):
         ax.set_title("USG vs TOV Percent for {} in {}".format(playeradvanced["Player"][pos],playeradvanced["Tm"][pos]))
         ax.scatter(x = playeradvanced["USG%"][pos],y = playeradvanced["TOV%"][pos], color = "red")
         ax.text(x = playeradvanced["USG%"][pos]+0.3,y = playeradvanced["TOV%"][pos]+0.3, s=playeradvanced.Player[pos])
+        plt.savefig("player stats/{}/Usage vs Turnover %.png".format(pl))
         plt.show()
         plt.close()
     
@@ -148,7 +159,7 @@ def commonViz(pl,pos,position,ct):
             axe.set_title("FG Split for {} in {}".format(playershooting.Player[pos],playershooting.Tm[pos]),color = "white",fontsize = 12)
         #axe[i][j].legend(labels=playershooting.columns[7:12], loc="center left", bbox_to_anchor = (3,3))
 
-        #plt.savefig("playerplots/FG split vs Distance.png",facecolor = "black")
+        plt.savefig("player stats/{}/Field goal split.png".format(pl),facecolor = "black")
         plt.show()
         plt.close()
     
@@ -167,6 +178,7 @@ if __name__ == "__main__":
     print("Enter Player name with first letter capitalized")
     pl = input()
     pos,pl,ct = matchPlayerName(pl)
+    createFolder(pl)
     position = findPosition(pos)
     print("His position is : {}".format(position))
     commonViz(pl,pos,position,ct)
