@@ -129,6 +129,33 @@ def commonViz(pl,pos,position,ct):
         plt.show()
         plt.close()
     
+    ## FG split for player
+    if(playertotals.FG[pos] == 0):
+        print("This player has not made a basket in the entire season")
+    else:
+        fig,axe= plt.subplots(ct,1,figsize = (12*ct,12*ct),tight_layout = True )
+        fig.set_facecolor("black")
+        labels = playershooting.columns[10:15].str.split("%")
+        labels = [list(i) for i in zip(*list(labels))]
+        #print(playershooting.head())
+        #plt.title(playershooting.values[0][1],color = "w")
+        if(ct > 1):
+            for i in range(ct):
+                axe[i].pie(data=playershooting,labels = labels[0],autopct='%1.2f%%',x = playershooting.values[pos+i][10:15],textprops={'color' : "w",'fontsize':12})
+                axe[i].set_title("FG Split for {} in {}".format(playershooting.Player[pos+i],playershooting.Tm[pos+i]),color = "white",fontsize = 12)
+        else:        
+            axe.pie(data=playershooting,labels = labels[0],autopct='%1.2f%%',x = playershooting.values[pos][10:15],textprops={'color' : "w",'fontsize':12})
+            axe.set_title("FG Split for {} in {}".format(playershooting.Player[pos],playershooting.Tm[pos]),color = "white",fontsize = 12)
+        #axe[i][j].legend(labels=playershooting.columns[7:12], loc="center left", bbox_to_anchor = (3,3))
+
+        #plt.savefig("playerplots/FG split vs Distance.png",facecolor = "black")
+        plt.show()
+        plt.close()
+    
+    ## Modularizing plot making. To be done
+    ## def makeplots(ct):
+
+    
 
 if __name__ == "__main__":
     playertotals = pd.read_excel("newplayerstats.xlsx",sheet_name="Player Totals")
