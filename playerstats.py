@@ -19,7 +19,8 @@ import os
 ## Special characters in names, not detected. Workaround : Type rest of name or part of the name without the accented letter or copy from online.
 ## Remove TOT rows from all sheets - Done. Then Save all the vizs under player folder. - Done.
 ## Check if player folder exists before doing viz. - Done.
-## Modularize plots
+## Modularize plots, maybe interactive ones too with plotly in the future.
+## Integrate with streamlit
 
 ## Create Player folder
 def createFolder(pl):
@@ -186,3 +187,5 @@ if __name__ == "__main__":
 
 
 
+
+## 3 point % vs rim finishing among young guards maybe? Like Ja, Luka, Booker, Jamal, D-Mitch, etc
