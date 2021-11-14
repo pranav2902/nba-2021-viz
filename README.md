@@ -15,9 +15,3 @@ Basic Team Visualizations added:
 2. % of FG taken with distance
 3. Assist to Turnover plot
 4. Rebound split
-
-To/Do
-1. Special characters in names, not detected - Workaround : Type rest of name or part of the name without the accented letter or copy from online.
-2. Remove TOT rows from all sheets - Done. Then Save all the vizs under player folder. - Done.
-3. Check if player folder exists before doing viz. - Done.
-4. Modularize plots 
